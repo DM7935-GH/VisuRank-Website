@@ -5,7 +5,7 @@ echo
     <div class='container-fluid'> <!--Causes the navbar to expand to fit the width of the viewport-->
         <a class='navbar-brand' href='#'>VisuRank</a>
         <button class='navbar-toggler' type='button' data-bs-toggle='collapse' data-bs-target='#navbarSupportedContent' aria-controls='navbarSupportedContent' aria-expanded='false' aria-label='Toggle navigation'>
-            <span class='navbar-toggler-icon'></span>
+            <span class='navbar-toggler-icon navbar-dark'></span>
             <!--The 'navbar-toggler' button expands/contracts the navbar when clicked-->
         </button>
 
