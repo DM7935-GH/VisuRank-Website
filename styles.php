@@ -38,5 +38,10 @@ echo
 .nav-link {
     font-size: 18px;
 }
+
+#main {
+    padding: 20px;
+    margin: 0 auto;
+}
 ";
 ?>
