@@ -1,6 +1,22 @@
 <?php
 session_name("VisuRank");
 session_start(); // Starts the PHP session
+
+$listDataJSON = file_get_contents('../tempListData.json');
+$listData = json_decode($listDataJSON, true);
+
+$listOrdered = array();
+
+if ($listData != null) {
+    // If the JSON file is not empty
+
+    foreach ($listData as $key => $value) {
+        $listOrdered[$key] = $listData[$key]["value"];
+    }
+    unset($key, $value);
+
+    arsort($listOrdered);
+}
 ?>
 
 
@@ -31,9 +47,9 @@ session_start(); // Starts the PHP session
         <?php include '../navbar.php';?>
 
         <div id='main' class='d-flex flex-column'>
-            <p id='list-title' class='mb-3 h2 text-center fw-bold'>List of the something-est X of all time</p>
+            <p id='list-title' class='mb-3 h2 text-center fw-bold'>Largest Empires in History</p>
 
-            <p id='list-description' class='mb-2 h5 text-center'>This is a description of the list, describing what the list is about. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut semper nisl sit amet molestie vulputate.</p>
+            <p id='list-description' class='mb-2 h5 text-center'>This is a list of the largest empires throughout world history. Data is taken from Wikipedia, and figures may not be 100% accurate.</p>
 
             <hr style='width:50%; color: grey; margin: 20px auto;'>
 
@@ -42,19 +58,29 @@ session_start(); // Starts the PHP session
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>Item</th>
-                            <th>Value (unit)</th>
-                            <th>Description</th>
+                            <th>Name</th>
+                            <th>Area (million km^2)</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <!-- Example row -->
-                        <tr>
-                            <td>#1</td>
-                            <td>First Place</td>
-                            <td>100</td>
-                            <td>This is an example description of the item.</td>
-                        </tr>
+                        <?php
+                        $rank = 1;
+
+                        foreach ($listOrdered as $key => $value) {
+                            $itemName = $listData[$key]['name'];
+                            $itemValue = $listData[$key]['value'];
+                            echo "
+                            <tr>
+                                <td>$rank</td>
+                                <td>$itemName</td>
+                                <td>$itemValue</td>
+                            </tr>
+                            ";
+                            $rank++;
+                        }
+
+                        unset($key, $value);
+                        ?>
                     </tbody>
                 </table>
             </div>
