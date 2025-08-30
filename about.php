@@ -10,19 +10,19 @@ session_start(); // Starts the PHP session
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Games Page</title>
+        <title>About ViSuRank Lists</title>
 
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
         <style type="text/css">
-            <?php include '../styles.php';?>
+            <?php include 'Protected/styles.php';?>
         </style>
     </head>
 
     <body>
-        <?php include '../navbar.php';?>
+        <?php include 'Protected/navbar.php';?>
 
-        <h2>Edit List</h2>
+        <h2>About VizuRank Lists</h2>
     </body>
 </html>
