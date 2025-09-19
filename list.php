@@ -2,26 +2,8 @@
 session_name("VisuRank");
 session_start(); // Starts the PHP session
 
-$listDataJSON = file_get_contents('Protected/tempListData.json');
-$listData = json_decode($listDataJSON, true);
-
-$listOrdered = array();
-
-if ($listData != null) {
-    // If the JSON file is not empty
-
-    foreach ($listData as $key => $value) {
-        $listOrdered[$key] = $listData[$key]["value"];
-    }
-    unset($key, $value);
-
-    arsort($listOrdered);
-}
-
-$columnNames = array("name"=>"Name", "value"=>"Area (million km^2)", "field1"=>"Year", "field2"=>Null
-, "field3"=>Null, "field4"=>Null, "field5"=>Null, "description"=>Null, "thumbnail"=>true);
-$listTitle = "Largest Empires in History";
-$listDescription = "This is a list of the largest empires throughout world history. The figures given are estimates, and may not be 100% accurate. All data is taken from the Wikipedia article \"List of largest empires\".";
+include 'Protected/functions.php';
+SetSessionVariables();
 ?>
 
 
@@ -56,9 +38,9 @@ $listDescription = "This is a list of the largest empires throughout world histo
         <?php include 'Protected/navbar.php';?>
 
         <div id='main' class='d-flex flex-column'>
-            <p id='list-title' class='mb-3 h2 text-center fw-bold'><?php echo $listTitle; ?></p>
+            <p id='list-title' class='mb-3 h2 text-center fw-bold'><?php echo $_SESSION['listTitle']; ?></p>
 
-            <p id='list-description' class='mb-2 h5 text-center'><?php echo $listDescription; ?></p>
+            <p id='list-description' class='mb-2 h5 text-center'><?php echo $_SESSION['listDescription']; ?></p>
 
             <hr style='width:50%; color: grey; margin: 20px auto;'>
 
@@ -68,11 +50,12 @@ $listDescription = "This is a list of the largest empires throughout world histo
                         <tr>
                             <th>#</th>
                             <?php
-                            foreach ($columnNames as $key => $value) {
+                            // This loop generates the list's table headers, based on the column names
+                            foreach ($_SESSION['columnNames'] as $key => $value) {
                                 if ($key == "thumbnail" && $value == true) {
                                     echo "<th></th>";
                                 } else if ($key == "name" || $key == "value" || $value != null) {
-                                    echo "<th>" , $columnNames[$key] , "</th>";
+                                    echo "<th>" , $_SESSION['columnNames'][$key] , "</th>";
                                 }
                             }
                             ?>
@@ -82,7 +65,9 @@ $listDescription = "This is a list of the largest empires throughout world histo
                         <?php
                         $rank = 1;
 
+                        // This loop generates the rest of the rows in this list
                         foreach ($listOrdered as $listKey => $listValue) {
+                            // Generates the rank, name, and value fields for this row
                             echo "
                             <tr>
                                 <td>{$rank}</td>
@@ -90,7 +75,8 @@ $listDescription = "This is a list of the largest empires throughout world histo
                                 <td>{$listData[$listKey]['value']}</td>
                             ";
 
-                            foreach ($columnNames as $columnKey => $coulmnValue) {
+                            // Generates the other fields for this row, including the thumbnail if it exists
+                            foreach ($_SESSION['columnNames'] as $columnKey => $coulmnValue) {
                                 if ($columnKey == "thumbnail" && $coulmnValue == true) {
                                     if (array_key_exists('thumbnail',$listData[$listKey])) {
                                         echo "<td><img src='ImageFolder/1/{$listData[$listKey]['thumbnail']}' class='img-fluid mx-auto d-block thumbnail-image'></td>";

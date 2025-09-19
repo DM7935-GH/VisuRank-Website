@@ -23,6 +23,6 @@ session_start(); // Starts the PHP session
     <body>
         <?php include 'Protected/navbar.php';?>
 
-        <h2>About VizuRank Lists</h2>
+        <p id='edit-title' class='mb-3 h2 text-center fw-bold'>About VisuRank Lists</p>
     </body>
 </html>
